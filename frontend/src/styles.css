@@ -1,0 +1,414 @@
+/* ========= ОБЩЕЕ ========= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f7f8fa;
+  color: #222;
+  line-height: 1.6;
+  font-family: 'Inter', sans-serif;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* ========= ХЕДЕР ========= */
+.header {
+  background: #1a1f36;
+  color: #fff;
+  padding: 15px 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-icon {
+  font-size: 28px;
+  font-weight: bold;
+  color: #ff9800; /* Оранжевый акцент */
+}
+
+.logo-text {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.logo-subtitle {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.user-menu {
+  display: flex;
+  gap: 15px;
+}
+
+.user-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.user-link:hover {
+  color: #ff9800;
+}
+
+/* ========= КАРТОЧКИ И ГРИДЫ ========= */
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.user-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-label {
+  font-size: 13px;
+  color: #666;
+}
+
+.info-value {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* Сетка для списка посылок */
+.parcels-list-grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    margin-top: 15px;
+}
+
+/* ========= КНОПКИ ========= */
+.btn {
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.btn-primary {
+  background: #1a73e8;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #155ab6;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid #1a73e8;
+  color: #1a73e8;
+}
+
+.btn-outline:hover {
+  background: #1a73e8;
+  color: #fff;
+}
+
+.action-buttons {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+/* ========= ПЛАТФОРМЫ ========= */
+.platforms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 15px;
+}
+
+.platform-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  border-radius: 12px;
+  background: #f3f4f6;
+  transition: 0.3s;
+  cursor: pointer;
+  justify-content: center;
+  min-height: 120px;
+}
+
+.platform-item:hover {
+  background: #e5e7eb;
+}
+
+.platform-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+
+.platform-icon img {
+  max-width: 36px;
+  max-height: 36px;
+  object-fit: contain;
+}
+
+/* ========= ТАБЫ ========= */
+.navigation-tabs {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.nav-btn {
+  flex: 1;
+  padding: 12px;
+  margin: 0 5px;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: 0.2s;
+  color: #666;
+}
+
+.nav-btn:hover:not(.active) {
+  color: #1a1f36;
+}
+
+.nav-btn.active {
+  color: #ff9800; /* Активный таб */
+  border-bottom: 3px solid #ff9800;
+}
+
+/* ========= ПОИСК ========= */
+.search-card {
+    padding: 10px; /* Уменьшаем паддинг для карты поиска */
+}
+.search-input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+/* ========= ПУСТО/СООБЩЕНИЯ ========= */
+.no-tracks-text {
+  text-align: center;
+  font-size: 16px;
+  color: #999;
+  padding: 15px;
+}
+
+/* ========= КАРТОЧКА ТРЕКА (Track Card) ========= */
+.track-card {
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    background-color: #fff;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.track-header {
+    background-color: #ff9800; /* Оранжевый фон */
+    color: #fff;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.track-header.search-result {
+    background-color: #1a73e8; /* Синий фон для результатов поиска */
+}
+
+.track-header .delete-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.2s;
+    line-height: 1;
+    padding: 0 5px;
+}
+
+.track-header .delete-btn:hover {
+    color: #ffddb3;
+}
+
+.track-body {
+    padding: 15px;
+}
+
+.track-notes {
+    color: #888;
+    font-size: 13px;
+    margin-bottom: 15px;
+}
+
+.track-status-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.track-status-item:last-child {
+    margin-bottom: 0;
+}
+
+/* Линия таймлайна */
+.track-status-item:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 25px;
+    bottom: -15px;
+    width: 2px;
+    background-color: #eee;
+}
+
+.status-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    z-index: 10;
+}
+
+.status-icon.pending {
+    background-color: #ccc;
+    border: 3px solid #eee;
+}
+
+.status-icon.completed {
+    background-color: #4CAF50; /* Зеленый цвет */
+    color: #fff;
+    font-size: 12px;
+}
+
+.status-content {
+    flex-grow: 1;
+}
+
+.status-title {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.2;
+}
+
+.status-date {
+    font-size: 12px;
+    color: #666;
+    margin-top: 2px;
+}
+
+.status-date.no-data {
+    font-style: italic;
+    color: #999;
+}
+
+/* ========= МОДАЛЬНОЕ ОКНО ========= */
+.custom-modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s;
+}
+
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: #333;
+    text-decoration: none;
+}
+
+.modal-title {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+#modal-message {
+    font-size: 13px;
+    margin-top: 5px;
+    height: 20px;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0; transform: scale(0.95);}
+    to {opacity: 1; transform: scale(1);}
+}

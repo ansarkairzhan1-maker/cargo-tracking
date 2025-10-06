@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админка - DELTA CARGO</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- FullCalendar -->
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css' rel='stylesheet' />
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center py-3">
+                <div class="logo">
+                    <span class="logo-icon">Δ</span>
+                    <span class="logo-text">DELTA CARGO</span>
+                    <span class="logo-subtitle">Панель администратора</span>
+                </div>
+                <div class="user-menu">
+                    <span class="text-white me-3" id="admin-name">Admin</span>
+                    <a href="#" class="user-link logout">Выход</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main container my-4">
+        <!-- Add User Section -->
+        <div class="card p-4 mb-4">
+            <h3 class="mb-4">📝 Добавить пользователя</h3>
+            <form id="add-user-form" class="row g-3">
+                <div class="col-md-4">
+                    <label for="user-name" class="form-label">Имя *</label>
+                    <input type="text" class="form-control" placeholder="Иван Иванов" id="user-name" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="user-email" class="form-label">Email *</label>
+                    <input type="email" class="form-control" placeholder="user@example.com" id="user-email" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="user-password" class="form-label">Пароль *</label>
+                    <input type="password" class="form-control" placeholder="Минимум 6 символов" id="user-password" required minlength="6">
+                </div>
+                <div class="col-md-4">
+                    <label for="user-whatsapp" class="form-label">WhatsApp *</label>
+                    <input type="text" class="form-control" placeholder="+77771234567" id="user-whatsapp" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="user-branch" class="form-label">Филиал *</label>
+                    <input type="text" class="form-control" placeholder="Алматы" id="user-branch" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="user-personal-code" class="form-label">Персональный код (опционально)</label>
+                    <input type="text" class="form-control" placeholder="Авто-генерация" id="user-personal-code">
+                    <small class="text-muted">Оставьте пустым для авто-генерации</small>
+                </div>
+                <div class="col-md-4">
+                    <label for="user-role" class="form-label">Роль *</label>
+                    <select class="form-control" id="user-role" required>
+                        <option value="client">Клиент</option>
+                        <option value="admin">Администратор</option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">
+                        <span>➕ Добавить пользователя</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- User List Section -->
+        <div class="card p-4 mb-4">
+            <h3 class="d-flex justify-content-between align-items-center mb-3">
+                <span>👥 Список пользователей</span>
+                <button class="btn btn-secondary" id="toggle-users-btn">Показать</button>
+            </h3>
+            <div id="users-table-container" style="display:none;">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover" id="users-table">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Код</th>
+                                <th>Имя</th>
+                                <th>Email</th>
+                                <th>WhatsApp</th>
+                                <th>Филиал</th>
+                                <th>Роль</th>
+                                <th>Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upload Tracks Section -->
+        <div class="card p-4 mb-4">
+            <h3 class="mb-4">📦 Загрузить треки</h3>
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label for="china-date" class="form-label">Дата отправления из Китая *</label>
+                    <input type="date" id="china-date" class="form-control" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="track-status-select" class="form-label">Статус *</label>
+                    <select id="track-status-select" class="form-control" required>
+                        <option value="" selected disabled>Выберите статус для обновления</option>
+                        <option value="Выехал из склада Китая">🚚 Выехал из склада Китая</option>
+                        <option value="В транзитном складе">🏭 В транзитном складе</option>
+                        <option value="В Алматы (Склад)">📍 В Алматы (Склад)</option>
+                        <option value="В Астане (Склад)">📍 В Астане (Склад)</option>
+                        <option value="Выдан клиенту">✅ Выдан клиенту</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="tracks-file" class="form-label">Файл с треками *</label>
+                    <input type="file" id="tracks-file" class="form-control" accept=".txt,.xlsx,.csv" required>
+                    <small class="text-muted">Форматы: .txt, .xlsx, .csv</small>
+                </div>
+                <div class="col-12">
+                    <button class="btn btn-success" id="upload-tracks-btn">
+                        <span>📤 Загрузить</span>
+                    </button>
+                </div>
+            </div>
+            <div class="mt-3">
+                <div class="alert alert-info">
+                    <strong>ℹ️ Инструкция:</strong>
+                    <ul class="mb-0 mt-2">
+                        <li>Файл должен содержать трек-номера (по одному на строку для .txt)</li>
+                        <li>Для Excel/CSV трек-номера должны быть в первой колонке</li>
+                        <li>Все треки будут обновлены выбранным статусом</li>
+                        <li>Если трек не существует, он будет создан как неназначенный</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Track Search Section -->
+        <!-- Track Search Section (UPDATED) -->
+        <div class="card p-4 mb-4">
+            <h3 class="mb-4">🔍 Отслеживание и управление треками</h3>
+            <div class="row g-3">
+                <div class="col-md-8">
+                    <label for="track-search" class="form-label">Трек-номер</label>
+                    <input type="text" class="form-control" id="track-search" placeholder="Введите трек номер">
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                    <button class="btn btn-info w-100" id="track-search-btn">
+                        <span>🔎 Найти трек</span>
+                    </button>
+                </div>
+            </div>
+            <div id="track-result" class="mt-3"></div>
+        </div>
+
+        <!-- Parcel Delivery Scanner Section (NEW) -->
+<div class="card p-4 mb-4">
+    <h3 class="mb-4">📦 Выдача товаров (Сканер штрих-кодов)</h3>
+    <p class="text-muted">Используйте штрих-сканер или введите трек-номера вручную для массовой выдачи посылок клиентам.</p>
+    
+    <div class="alert alert-info">
+        <strong>💡 Как использовать:</strong>
+        <ol class="mb-0 mt-2">
+            <li>Фокусируйтесь на поле ввода ниже</li>
+            <li>Сканируйте штрих-коды последовательно (сканер автоматически добавит Enter)</li>
+            <li>Или вводите трек-номера вручную, нажимая Enter после каждого</li>
+            <li>Просмотрите список и выберите действие</li>
+        </ol>
+    </div>
+    
+    <div class="row g-3 mb-3">
+        <div class="col-12">
+            <label for="scanner-input" class="form-label">Сканер / Ввод трек-номеров</label>
+            <input 
+                type="text" 
+                class="form-control form-control-lg" 
+                id="scanner-input" 
+                placeholder="Сканируйте или введите трек-номер и нажмите Enter..."
+                autocomplete="off"
+            >
+            <small class="text-muted">Сканер автоматически добавляет трек в список</small>
+        </div>
+    </div>
+    
+    <div id="scanned-tracks-container" style="display: none;">
+        <h5>Отсканированные посылки (<span id="scanned-count">0</span>)</h5>
+        
+        <div class="table-responsive mb-3" style="max-height: 400px; overflow-y: auto;">
+            <table class="table table-sm table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Трек-номер</th>
+                        <th>Статус</th>
+                        <th>Код клиента</th>
+                        <th>Действие</th>
+                    </tr>
+                </thead>
+                <tbody id="scanned-tracks-tbody"></tbody>
+            </table>
+        </div>
+        
+                <div class="d-flex gap-2">
+                    <button class="btn btn-success" id="deliver-scanned-btn">
+                        ✅ Выдать клиентам (<span id="deliver-count">0</span>)
+                    </button>
+                    <button class="btn btn-danger" id="delete-scanned-btn">
+                        🗑️ Удалить все (<span id="delete-count">0</span>)
+                    </button>
+                    <button class="btn btn-secondary" id="clear-scanned-btn">
+                        🔄 Очистить список
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Shipment Calendar Section (NEW) -->
+        <div class="card p-4 mb-4">
+            <h3 class="mb-4">📅 Календарь отправлений</h3>
+            <p class="text-muted">Нажмите на дату, чтобы увидеть все посылки, отправленные в этот день, и массово обновить их статус.</p>
+            
+            <div id="calendar"></div>
+        </div>
+    </main>
+
+    <!-- Modal for Date Tracks -->
+    <div class="modal fade" id="dateTracksModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalDateTitle">Посылки на дату</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <strong>Дата отправления:</strong> <span id="selected-date"></span>
+                    </div>
+                    <div class="mb-3">
+                        <strong>Всего посылок:</strong> <span id="total-tracks"></span>
+                    </div>
+                    
+                    <div class="table-responsive mb-3" style="max-height: 300px; overflow-y: auto;">
+                        <table class="table table-sm table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Трек-номер</th>
+                                    <th>Статус</th>
+                                    <th>Код клиента</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tracks-list-body"></tbody>
+                        </table>
+                    </div>
+                    
+                    <hr>
+                    
+                    <h6>Массовое обновление статуса</h6>
+                    <form id="batch-update-form">
+                        <div class="row g-3">
+                            <div class="col-md-8">
+                                <label for="batch-new-status" class="form-label">Новый статус *</label>
+                                <select id="batch-new-status" class="form-control" required>
+                                    <option value="">Выберите статус</option>
+                                    <option value="Выехал из склада Китая">🚚 Выехал из склада Китая</option>
+                                    <option value="В транзитном складе">🏭 В транзитном складе</option>
+                                    <option value="В Алматы (Склад)">📍 В Алматы (Склад)</option>
+                                    <option value="В Астане (Склад)">📍 В Астане (Склад)</option>
+                                    <option value="Выдан клиенту">✅ Выдан клиенту</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 d-flex align-items-end">
+                                <button type="submit" class="btn btn-primary w-100">Обновить все</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer py-3 text-center">
+        <div class="container">
+            <p class="mb-0">DELTA CARGO © 2025 | Admin Panel v1.0</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/admin.js" type="module"></script>
+</body>
+</html>

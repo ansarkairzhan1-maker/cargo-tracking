@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Главная - DELTA CARGO</title>
+
+  <!-- Шрифты -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
+  <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Стили -->
+    <link rel="stylesheet" href="/static/styles.css">
+
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">Δ</span>
+                    <span class="logo-text">DELTA CARGO</span>
+                    <span class="logo-subtitle">Ваш надежный партнер</span>
+                </div>
+                <div class="user-menu">
+                    <span id="user-code" class="code-badge">000</span>
+                    <span class="user-link" id="user-name">Пользователь</span>
+                    <button class="btn btn-sm btn-outline-light me-2" data-bs-toggle="modal" data-bs-target="#changePasswordModal" title="Сменить пароль">
+                        🔐
+                    </button>
+                    <a href="#" class="user-link logout">Выход</a>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <!-- Внимание: USER_CODE 106 используется в JS для демонстрации -->
+            <div class="card user-info-card">
+                <div class="user-info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Тариф:</span>
+                        <span class="info-value">2215 тг/кг</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Ваш код:</span>
+                        <span class="info-value" id="user-code">106</span> 
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Адрес:</span>
+                        <span class="info-value">ул. Мендикулова 98, БЦ Life Town, бутик 13/3а</span>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-primary" id="enable-notify">Включить Уведомление</button>
+                    <button class="btn btn-outline" id="refresh-btn">Обновить страницу</button>
+                </div>
+            </div>
+
+            <!-- Платформы -->
+            <div class="card platforms-card">
+                <div class="platforms-grid">
+                    <div class="platform-item" data-platform="taobao">
+                        <div class="platform-icon">
+                            <img src="https://cdn4.iconfinder.com/data/icons/chinas-social-share-icons/256/cssi_taobao-512.png" alt="TaoBao" />
+                        </div>
+                        <span class="platform-name">TaoBao</span>
+                    </div>
+                    <div class="platform-item" data-platform="1688">
+                        <div class="platform-icon">
+                            <img src="https://cdn4.iconfinder.com/data/icons/china-social-media/512/1688-512.png" alt="1688" />
+                        </div>
+                        <span class="platform-name">1688</span>
+                    </div>
+                    <div class="platform-item" data-platform="pinduoduo">
+                        <div class="platform-icon">
+                            <img src="https://cdn4.iconfinder.com/data/icons/china-social-media/512/pinduoduo-256.png" alt="Pinduoduo" />
+                        </div>
+                        <span class="platform-name">Pinduoduo</span>
+                    </div>
+                    <div class="platform-item" data-platform="alibaba">
+                        <div class="platform-icon">
+                            <img src="https://cdn1.iconfinder.com/data/icons/social-media-2070/512/social_media_alibaba-256.png" alt="Alibaba" />
+                        </div>
+                        <span class="platform-name">Alibaba</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Уведомления (пока пустой блок) -->
+            <div class="card notifications-card">
+                <h4 class="mb-2">Уведомления</h4>
+                <p class="text-secondary">Здесь будут отображаться важные сообщения о ваших посылках.</p>
+            </div>
+
+            <!-- Навигационные табы -->
+            <div class="navigation-tabs">
+                <button class="nav-btn active" data-tab="parcels" id="parcels-btn">Посылки</button>
+                <button class="nav-btn add-btn" id="add-btn" data-tab="add">Добавить</button>
+                <button class="nav-btn info-btn" data-tab="info">Информация</button>
+                <button class="nav-btn archive-btn" data-tab="archive">Архив</button>
+            </div>
+
+            <!-- Поиск треков -->
+            <div class="card search-card">
+                <input type="text" class="search-input" id="search-input" placeholder="Поиск по трек-номеру..." />
+            </div>
+
+            <!-- Контейнер для результатов/сообщений -->
+            <div id="main-content-area">
+                <!-- Секция для отображения треков пользователя -->
+                <div class="card user-parcels-card" id="user-parcels-card">
+                    <h3>Ваши посылки</h3>
+                    <!-- Контейнер для карточек треков -->
+                    <div id="parcels-list" class="parcels-list-grid">
+                        <p class="no-tracks-text">Загружаю ваши треки...</p>
+                    </div>
+                </div>
+
+                <!-- Секция для результатов поиска (динамически обновляется) -->
+                <div class="card search-result-card" id="search-result-card" style="display:none;">
+                    <h3>Результат поиска</h3>
+                    <div id="search-result-container"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="social-icons">
+                 <p>DELTA CARGO © 2025</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- МОДАЛЬНОЕ ОКНО ДЛЯ ДОБАВЛЕНИЯ ТРЕКА -->
+    <div id="track-modal" class="custom-modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h4 class="modal-title">Добавить трек</h4>
+            <input type="text" class="form-control mb-3" id="track-number-input" placeholder="Введите трек-номер" required>
+            <p id="modal-message" class="text-danger"></p>
+            <button class="btn btn-success w-100" id="submit-track-btn">Добавить</button>
+        </div>
+    </div>
+
+    <!-- Файл JavaScript должен быть в папке /static/ -->
+    <script src="/static/main.js" type="module"></script>
+    <!-- Change Password Modal -->
+    <div class="modal fade" id="changePasswordModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">🔐 Изменить пароль</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="password-alert-container"></div>
+                    
+                    <form id="change-password-form">
+                        <div class="mb-3">
+                            <label for="current-password" class="form-label">Текущий пароль *</label>
+                            <input 
+                                type="password" 
+                                class="form-control" 
+                                id="current-password" 
+                                required
+                                autocomplete="current-password"
+                            >
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="new-password" class="form-label">Новый пароль *</label>
+                            <input 
+                                type="password" 
+                                class="form-control" 
+                                id="new-password" 
+                                required
+                                minlength="6"
+                                autocomplete="new-password"
+                            >
+                            <small class="text-muted">Минимум 6 символов</small>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="confirm-password" class="form-label">Подтвердите новый пароль *</label>
+                            <input 
+                                type="password" 
+                                class="form-control" 
+                                id="confirm-password" 
+                                required
+                                minlength="6"
+                                autocomplete="new-password"
+                            >
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary" id="submit-password-btn">
+                                Изменить пароль
+                            </button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                Отмена
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/main.js" type="module"></script>
+
+</body>
+</html>
